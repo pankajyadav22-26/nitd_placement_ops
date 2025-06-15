@@ -3,13 +3,15 @@ import OfferModel from "@/models/offer";
 import { connectToDatabase } from "@/lib/db";
 import { recalculateOfferFlags } from "@/lib/recalculateFlags";
 
-export async function PATCH(
-  req: NextRequest,
-  context: { params: { roll_no: string; offer_id: string } }
-) {
+export async function PATCH(req: NextRequest) {
   await connectToDatabase();
 
-  const { roll_no, offer_id } = context.params;
+  const url = new URL(req.url);
+  const segments = url.pathname.split("/");
+
+  const roll_no = segments[segments.length - 2];
+  const offer_id = segments[segments.length - 1];
+
   const updateData = await req.json();
 
   try {
@@ -23,6 +25,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Offer not found" }, { status: 404 });
     }
 
+    // Update the fields
     Object.keys(updateData).forEach((key) => {
       if (key in offer) {
         offer[key] = updateData[key];
