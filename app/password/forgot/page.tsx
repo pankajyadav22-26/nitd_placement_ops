@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation';
 
 export default function ForgotPasswordPage() {
   const searchParams = useSearchParams();
-  const role = searchParams.get('role'); 
-
+  const role = searchParams.get('role');
+  
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
