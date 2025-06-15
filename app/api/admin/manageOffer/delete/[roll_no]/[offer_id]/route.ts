@@ -5,7 +5,7 @@ import { recalculateOfferFlags } from "@/lib/recalculateFlags";
 
 export async function DELETE(
   _req: NextRequest,
-  context: { params: { roll_no: string; offer_id: string } }
+  context: { params: Record<string, string> }
 ) {
   await connectToDatabase();
 
