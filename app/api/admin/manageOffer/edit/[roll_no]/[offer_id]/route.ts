@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import OfferModel from "@/models/offer";
 import { connectToDatabase } from "@/lib/db";
 import { recalculateOfferFlags } from "@/lib/recalculateFlags";
@@ -14,7 +14,6 @@ export async function PATCH(
 
   try {
     const student = await OfferModel.findOne({ roll_no });
-
     if (!student) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
     }
@@ -37,7 +36,7 @@ export async function PATCH(
 
     return NextResponse.json({ message: "Offer updated", data: student });
   } catch (err) {
-    console.error("Error updating offer:", err);
+    console.error("Edit error:", err);
     return NextResponse.json({ error: "Failed to update offer" }, { status: 500 });
   }
 }
