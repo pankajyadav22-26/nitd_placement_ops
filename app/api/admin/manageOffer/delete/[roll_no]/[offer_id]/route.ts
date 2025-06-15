@@ -1,15 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import OfferModel from "@/models/offer";
 import { connectToDatabase } from "@/lib/db";
 import { recalculateOfferFlags } from "@/lib/recalculateFlags";
 
 export async function DELETE(
-  _req: Request,
-  { params }: { params: { roll_no: string; offer_id: string } }
+  _req: NextRequest,
+  context: { params: { roll_no: string; offer_id: string } }
 ) {
   await connectToDatabase();
 
-  const { roll_no, offer_id } = params;
+  const { roll_no, offer_id } = context.params;
 
   try {
     const student = await OfferModel.findOne({ roll_no });
@@ -23,9 +23,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Offer not found" }, { status: 404 });
     }
 
-    offer.deleteOne(); // equivalent to `offer.remove()` but more consistent with Mongoose 6+
-
-    // Recalculate flags based on the updated offers array
+    offer.deleteOne();
     const updatedFlags = recalculateOfferFlags(student.offers);
     student.set(updatedFlags);
 
