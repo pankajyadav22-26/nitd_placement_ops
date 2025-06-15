@@ -3,13 +3,15 @@ import OfferModel from "@/models/offer";
 import { connectToDatabase } from "@/lib/db";
 import { recalculateOfferFlags } from "@/lib/recalculateFlags";
 
-export async function DELETE(
-  _req: NextRequest,
-  context: { params: Record<string, string> }
-) {
+export async function DELETE(req: NextRequest) {
   await connectToDatabase();
 
-  const { roll_no, offer_id } = context.params;
+  const url = new URL(req.url);
+  const segments = url.pathname.split("/");
+
+  // Adjust this based on actual route path
+  const roll_no = segments[segments.length - 2];
+  const offer_id = segments[segments.length - 1];
 
   try {
     const student = await OfferModel.findOne({ roll_no });
