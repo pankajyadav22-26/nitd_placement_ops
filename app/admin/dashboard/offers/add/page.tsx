@@ -41,7 +41,7 @@ export default function AddOfferForm() {
         is_ppo: form.is_ppo,
       };
 
-      const res = await fetch("/api/admin/manageOffer/add-bulk", {
+      const res = await fetch("/api/admin/manageOffer/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
