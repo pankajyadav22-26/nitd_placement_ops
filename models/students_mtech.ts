@@ -22,7 +22,7 @@ export interface MtechStudent {
   class10_passing_year: number;
   class10_score: string;
   class10_board: string;
-  class12_passing_year: number;
+  class12_passing_year: string;
   class12_score: string;
   class12_board: string;
   resume_link: string;
@@ -52,7 +52,7 @@ const MtechStudentSchema = new Schema<MtechStudent>(
     class10_passing_year: { type: Number, required: true },
     class10_score: { type: String, required: true },
     class10_board: { type: String, required: true },
-    class12_passing_year: { type: Number, required: true },
+    class12_passing_year: { type: String, required: true },
     class12_score: { type: String, required: true },
     class12_board: { type: String, required: true },
     resume_link: { type: String, required: true },
