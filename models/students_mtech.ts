@@ -14,7 +14,7 @@ export interface MtechStudent {
   dob: string;
   gender: "Male" | "Female" | "Other";
   cgpa: number;
-  btech_cgpa: number;
+  btech_cgpa: string;
   workExperience: "Yes" | "No";  
   phone: string;
   nationality: string;
@@ -44,7 +44,7 @@ const MtechStudentSchema = new Schema<MtechStudent>(
     dob: { type: String, required: true },
     gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
     cgpa: { type: Number, required: true },
-    btech_cgpa: { type: Number, required: true },
+    btech_cgpa: { type: String, required: true },
     workExperience: { type: String, enum: ["Yes", "No"], required: true },
     phone: { type: String, required: true },
     nationality: { type: String, required: true },
