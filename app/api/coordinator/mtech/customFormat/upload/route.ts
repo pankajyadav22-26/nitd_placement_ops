@@ -25,7 +25,10 @@ export async function POST(req: Request) {
     const ctc = parseFloat(formData.get("ctc") as string);
     const branches = JSON.parse(formData.get("branches") as string || "[]") as string[];
     const genders = JSON.parse(formData.get("genders") as string || "[]") as string[];
-    const minCGPA = parseFloat(formData.get("minCGPA") as string || "0");
+    const rawCGPA = formData.get("minCGPA");
+    const minCGPA = typeof rawCGPA === "string" && rawCGPA.trim() !== ""
+      ? Number(rawCGPA)
+      : 0;
     const allowBacklog = (formData.get("allowBacklog") || "false") === "true";
     const fieldMappings = JSON.parse(formData.get("fieldMappings") as string || "{}") as Record<string, string>; // e.g. { "Latest CGPA": "cgpa" }
 
@@ -53,13 +56,13 @@ export async function POST(req: Request) {
 
     const headerKeys = Object.keys(rows[0]);
     const rollNumbers = rows
-  .map(r => {
-    const raw = r["Roll Number"];
-    if (raw === undefined || raw === null) return NaN;
-    const trimmed = typeof raw === "string" ? raw.trim() : raw;
-    return Number(trimmed);
-  })
-  .filter(n => !isNaN(n));
+      .map(r => {
+        const raw = r["Roll Number"];
+        if (raw === undefined || raw === null) return NaN;
+        const asNumber = typeof raw === "string" ? Number(raw.trim()) : raw;
+        return Number(asNumber);
+      })
+      .filter(n => !isNaN(n));
     const students = await MtechStudentModel.find({ roll_no: { $in: rollNumbers } }).lean();
     const offers = await OfferModel.find({ roll_no: { $in: rollNumbers } }).lean();
 
@@ -75,7 +78,7 @@ export async function POST(req: Request) {
 
       // --- Eligibility Filters ---
       const cgpaOk = student.cgpa >= minCGPA;
-      const branchOk = branches.length === 0 || branches.includes(student.branch);
+      const branchOk = branches.length === 0 || branches.includes(student.mtech_branch);
       const genderOk = genders.length === 0 || genders.includes(student.gender);
       const backlogOk = allowBacklog || student.isAnyBacklog === "No";
 
