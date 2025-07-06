@@ -52,7 +52,9 @@ export async function POST(req: Request) {
     );
 
     const headerKeys = Object.keys(rows[0]);
-    const rollNumbers = rows.map(r => Number(r["Roll Number"]));
+    const rollNumbers = rows
+      .map(r => Number(r["Roll Number"]))
+      .filter(rn => !isNaN(rn));
     const students = await MtechStudentModel.find({ roll_no: { $in: rollNumbers } }).lean();
     const offers = await OfferModel.find({ roll_no: { $in: rollNumbers } }).lean();
 
