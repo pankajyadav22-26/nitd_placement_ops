@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const buffer = await fileToBuffer(file);
     const workbook = XLSX.read(buffer);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    
+
     const raw = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as string[][];
     if (!raw.length) {
       return NextResponse.json({ error: "Empty file" }, { status: 400 });
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     );
 
     const headerKeys = Object.keys(rows[0]);
-    const rollNumbers = rows.map(r => r["Roll Number"]);
+    const rollNumbers = rows.map(r => Number(r["Roll Number"]));
     const students = await MtechStudentModel.find({ roll_no: { $in: rollNumbers } }).lean();
     const offers = await OfferModel.find({ roll_no: { $in: rollNumbers } }).lean();
 
