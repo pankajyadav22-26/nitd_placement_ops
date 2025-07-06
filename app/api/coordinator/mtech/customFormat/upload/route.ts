@@ -36,7 +36,20 @@ export async function POST(req: Request) {
     const buffer = await fileToBuffer(file);
     const workbook = XLSX.read(buffer);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows: Record<string, any>[] = XLSX.utils.sheet_to_json(sheet);
+    
+    const raw = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as string[][];
+    if (!raw.length) {
+      return NextResponse.json({ error: "Empty file" }, { status: 400 });
+    }
+
+    const headers = raw[0];
+    const dataRows = raw.slice(1);
+    const rows = dataRows.map((row) =>
+      headers.reduce((acc, header, idx) => {
+        acc[header] = row[idx];
+        return acc;
+      }, {} as Record<string, any>)
+    );
 
     const headerKeys = Object.keys(rows[0]);
     const rollNumbers = rows.map(r => r["Roll Number"]);
