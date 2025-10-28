@@ -13,6 +13,8 @@ export default function Sidebar() {
     { href: "/coordinator/dashboard/btechDb/customFormat", label: "B.Tech Custom DB" },
     { href: "/coordinator/dashboard/mtechDb/defaultFormat", label: "M.Tech Default DB" },
     { href: "/coordinator/dashboard/mtechDb/customFormat", label: "M.Tech Custom DB" },
+    { href: "/coordinator/dashboard/mtechDb2027/defaultFormat", label: "M.Tech 2027 Default DB" },
+    { href: "/coordinator/dashboard/mtechDb2027/customFormat", label: "M.Tech 2027 Custom DB" },
   ];
 
   return (

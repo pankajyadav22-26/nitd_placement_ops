@@ -12,12 +12,16 @@ export default function Sidebar() {
     { href: "/admin/dashboard/profile", label: "Profile" },
     { href: "/admin/dashboard/uploadbtech", label: "Upload B.Tech" },
     { href: "/admin/dashboard/uploadmtech", label: "Upload M.Tech" },
+    { href: "/admin/dashboard/uploadmtech2027", label: "Upload M.Tech 2027" },
     { href: "/admin/dashboard/studentProfile/btech", label: "Btech Student Profile" },
     { href: "/admin/dashboard/studentProfile/mtech", label: "Mtech Student Profile" },
+    { href: "/admin/dashboard/studentProfile/mtech2027", label: "Mtech 2027 Student Profile" },
     { href: "/admin/dashboard/manage/admin", label: "Manage Admin" },
     { href: "/admin/dashboard/manage/coordinator", label: "Manage Coordinators" },
     { href: "/admin/dashboard/offers/add", label: "Add Offer" },
+    { href: "/admin/dashboard/offers2027/add", label: "Add Offer 2027" },
     { href: "/admin/dashboard/offers/manage", label: "Manage Offers" },
+    { href: "/admin/dashboard/offers2027/manage", label: "Manage Offers 2027" },
   ];
 
   return (
