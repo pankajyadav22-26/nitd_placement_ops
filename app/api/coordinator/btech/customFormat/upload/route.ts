@@ -69,7 +69,7 @@ export async function POST(req: Request) {
         const maxCtc = offerData?.highest_fte_ctc || 0;
         if (ctc < 7.5) {
           isEligible = true;
-        } else if (count < 2) {
+        } else if (count < 3) {
           if (count === 0 || ctc >= 1.5 * maxCtc) {
             isEligible = true;
           }
